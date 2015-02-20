@@ -1,0 +1,23 @@
+development:
+  adapter: "mysql"
+  database: dbDev
+  username: root
+  password: root
+  host: localhost
+  # port: 9999
+
+test:
+  adapter: "mysql"
+  database: dbFoo
+  username: root
+  password: root
+  host: localhost
+  # port: 9999
+
+production:
+  adapter: "mysql"
+  database: dbFoo
+  username: root
+  password: root
+  host: localhost
+  # port: 9999

@@ -1,0 +1,30 @@
+<% if @user.errors.any? %>
+  <div class="error_messages">
+    <h2>Form is invalid</h2>
+    <ul>
+      <% for message in @user.errors.full_messages %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h1>Sign Up</h1>
+
+<form action="/signup" method="POST" id="signup_form">
+  <div id="Errors"></div>
+  <label for="user_email">Email: </label>
+  <input type="text" name="user[email]" id="user_email">
+  <br/>
+  <label for="user_password">Password: </label>
+  <input type="password" name="user[password]" id="user_password">
+  <br/>
+  <label for="user_password_confirmation">Password Confirmation: </label>
+  <input type="password" name="user[password_confirmation]" id="user_password_confirmation">
+  <br/><br/><br/>
+  <input type="submit" name="Sign Up" value="Sign Up">
+</form>
+<script src="/javascripts/validate.js"></script>
+<script type="text/javascript">
+
+</script>

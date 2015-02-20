@@ -1,0 +1,8 @@
+<ul>
+<% @products.each do |prod| %>
+ <li>
+   <h4><a href="/products/<%= prod.id %>"><%= prod.title %></a></h4>
+   <p>Created: <%= prod.created_at %></p>
+ </li>
+<% end %>
+</ul>
