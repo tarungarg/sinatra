@@ -8,13 +8,13 @@ require 'json'
 
 enable :sessions
 
+# Models
 class Product < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :price
   validates :price, numericality: true
   validates_presence_of :description
   has_many :order_lines
-  # has_many :orders, through: :order_lines
 end
 
 class Order < ActiveRecord::Base
@@ -24,7 +24,6 @@ class Order < ActiveRecord::Base
   validates_presence_of :total
   belongs_to :user, foreign_key: "customer_id"
   has_many :order_lines
-  # has_many :products, through: :order_lines
 end
 
 class OrderLine < ActiveRecord::Base
@@ -65,10 +64,29 @@ class User < ActiveRecord::Base
 
 end
 
+# check if user is logged in
+register do
+  def auth (type)
+    condition do
+      redirect "/" unless send("is_#{type}?")
+    end
+  end
+end
+
+helpers do
+  def is_user?
+    @current_user != nil
+  end
+end
+
+# filter to check current user
 before do
   @current_user = User.find_by_id(session[:user_id])
 end
 
+## Root code
+
+# root url for sign in
 get "/" do
   @current_user = User.find_by_id(session[:user_id])
   if @current_user
@@ -78,12 +96,15 @@ get "/" do
   end
 end
 
+# view registration page
 get "/signup" do
   @user = User.new
   erb :"/users/new"
 end
 
+# register new user
 post "/create_signup" do
+  # validaiton for mass assignment check
   @user = User.new(params[:user]) if params[:user].has_key?("email") && params[:user].has_key?("password") && params[:user].has_key?("password_confirmation") && params[:user].has_key?("firstname") && params[:user].has_key?("lastname") 
   if @user && @user.save
     session[:user_id] = @user.id
@@ -93,6 +114,7 @@ post "/create_signup" do
   end
 end
 
+# sign in page
 get "/sign_in" do
   @current_user = User.find_by_id(session[:user_id])
   if @current_user
@@ -103,6 +125,7 @@ get "/sign_in" do
   end
 end
 
+# Check if user is valid
 post "/create_sign_in" do
   user = User.authenticate(params[:user][:email], params[:user][:password]) if params[:user].has_key?("email") && params[:user].has_key?("password")
   if user
@@ -119,16 +142,20 @@ delete "/destroy_user" do
   redirect "/"
 end
 
-get "/products" do
+## Product code
+
+# list of prducts
+get "/products", :auth => :user do
   @products = Product.order("created_at DESC")
   erb :"products/index.html"
 end
 
-get "/new_product" do
+get "/new_product", :auth => :user do
   erb :"products/new"
 end
 
 post "/add_product" do
+  # validaiton for mass assignment
   params[:product]["status"] = params[:product]["status"] == "on" ? 1 : 0
   @product = Product.new(params[:product]) if params[:product].has_key?("name") && params[:product].has_key?("status") && params[:product].has_key?("description")&& params[:product].has_key?("price")
   if @product && @product.save
@@ -138,7 +165,7 @@ post "/add_product" do
   end
 end
 
-get "/edit_product/:id" do
+get "/edit_product/:id", :auth => :user do
   @product = Product.find_by_id(params[:id]) if params[:id]
   if @product
     erb :"products/edit"
@@ -147,6 +174,7 @@ get "/edit_product/:id" do
   end
 end
 
+# update product
 put "/update_product/:id" do
   @product = Product.find_by_id(params[:id]) if params[:id]
   params[:product]["status"] = params[:product]["status"] == "on" ? 1 : 0
@@ -158,7 +186,10 @@ put "/update_product/:id" do
   end
 end
 
-get "/add_to_cart" do
+## Add to cart functionality
+
+# create order
+get "/add_to_cart", :auth => :user do
   @product = Product.find_by_id(params[:product_id])
   @order = OrderLine.where(["product_id = ? && customer_id = ? && order_id IS NULL", params[:product_id].to_i, @current_user.id ])
   unless @order.blank?
@@ -184,8 +215,8 @@ get "/add_to_cart" do
   end
 end
 
-get "/order_list" do
-  @orderlines = OrderLine.includes(:product).where(["customer_id = ? && order_id IS NULL", @current_user.id ])
+get "/order_list", :auth => :user do
+  @orderlines = OrderLine.includes(:product).order("updated_at DESC").where(["customer_id = ? && order_id IS NULL", @current_user.id ])
   @total_price = @orderlines.map(&:total_price).sum unless @orderlines.blank?
   erb :"/products/orders"
 end

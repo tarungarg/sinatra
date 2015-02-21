@@ -1,3 +1,5 @@
+// all code is to check validaiton form client side
+
 var requiredRule = {
   required: true
 }
