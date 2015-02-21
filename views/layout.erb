@@ -22,7 +22,6 @@
     <%if flash[:message]%>
       <p><%=flash[:message]%></p>
     <%end%>
-    <p id="product_list_response"><%=params[:message].gsub("'","") if params[:message]%></p>
     <%= yield %>
   </body>
 </html>

@@ -1,3 +1,5 @@
+<script src="/javascripts/products.js"></script>
+<div id="server-cart-errors"></div>
 <table>
   <tr>
     <th>Name</th>
@@ -14,12 +16,10 @@
       <td><%= product.status %></td>
       <td><%= product.description %></td>
       <td><a href="/edit_product/<%=product.id%>">Edit</a></td>
-      <td><a href="/add_to_cart">Add To Cart</a></td>
+      <td><a href="javascript:void(0);" class="add_to_cart" data-attr=<%=product.id%>>Add To Cart</a></td>
     </tr>
   <% end %>
 </table>
 
-<a href="/new_product">Add New Product</a>
-
-
-<div id="orders"></div>
+<a href="/new_product">Add New Product</a> <br/><br/>
+<a href="/order_list">Order List</a>

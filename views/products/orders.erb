@@ -1,0 +1,37 @@
+<script src="/javascripts/orderlines.js"></script>
+<div id="server-order-errors"></div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Qty</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th colspan="2"></th>
+  </tr>
+ 
+  <% @orderlines.each do |orderline| %>
+    <tr>
+      <td><%= orderline.product.name %></td>
+      <td><%= orderline.qty %></td>
+      <td><%= orderline.product.description %></td>
+      <td><%= orderline.total_price %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><b>Total Price</b></td>
+    <td colspan="2"></td>
+  </tr> 
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><b><%=@total_price if @total_price%></b></td>
+    <td colspan="2"></td>
+  </tr> 
+</table>
+
+<a href="/products">Add More Items</a><br/><br/>
+<a href="/checkout_order">Checkout</a>

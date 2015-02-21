@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150221114444) do
     t.integer  "qty",         limit: 4
     t.decimal  "unit_price",            precision: 9, scale: 1
     t.decimal  "total_price",           precision: 9, scale: 1
+    t.integer  "customer_id", limit: 4
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
   end

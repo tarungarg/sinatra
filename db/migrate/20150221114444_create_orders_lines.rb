@@ -6,6 +6,7 @@ class CreateOrdersLines < ActiveRecord::Migration
       t.integer :qty
       t.decimal :unit_price, precision: 9, scale: 1
       t.decimal :total_price, precision: 9, scale: 1
+      t.integer :customer_id
 
       t.timestamps null: false
     end
