@@ -1,18 +1,14 @@
-<% if @user.errors.any? %>
-  <div class="error_messages">
-    <h2>Form is invalid</h2>
-    <ul>
-      <% for message in @user.errors.full_messages %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
+<div id="server-signup_errors"></div>
 <h1>Sign Up</h1>
 
-<form action="/signup" method="POST" id="signup_form">
+<form action="/create_signup" method="POST" id="signup_form">
   <div id="Errors"></div>
+  <label for="user_firstname">FirstName: </label>
+  <input type="text" name="user[firstname]" id="user_firstname">
+  <br/>
+  <label for="user_lastname">LastName: </label>
+  <input type="text" name="user[lastname]" id="user_lastname">
+  <br/>
   <label for="user_email">Email: </label>
   <input type="text" name="user[email]" id="user_email">
   <br/>
@@ -24,7 +20,8 @@
   <br/><br/><br/>
   <input type="submit" name="Sign Up" value="Sign Up">
 </form>
-<script src="/javascripts/validate.js"></script>
-<script type="text/javascript">
+<br/>
+<a href="/sign_in">Sign In</a>
 
-</script>
+<script src="/javascripts/registration_form.js"></script>
+<script src="/javascripts/validate.js"></script>

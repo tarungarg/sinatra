@@ -1,0 +1,24 @@
+<div id="server-product-errors"></div>
+<h1>New Product</h1>
+
+<form action="/add_product" method="POST" id="new_product_form">
+  <label for="product_name">Name: </label>
+  <input type="text" name="product[name]" id="product_name">
+  <br/>
+  <label for="product_price">Price: </label>
+  <input type="text" name="product[price]" id="product_price"><br/>
+  (Please enter decimal value eg. 12.34)
+  <br/><br/>
+  <input type="checkbox" name="product[status]" id="product_status">Status
+  <br/><br/>
+  <label for="product_description">Description: </label>
+  <textarea rows="4" cols="50" name="product[description]" id="product_description"></textarea><br/>
+  (min=1 max=255)
+  <br/>
+  <br/><br/>
+  <input type="submit" name="Add Product" value="Add Product">
+</form>
+<br/>
+
+<script src="/javascripts/products.js"></script>
+<script src="/javascripts/validate.js"></script>

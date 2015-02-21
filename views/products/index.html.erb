@@ -1,0 +1,25 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Status</th>
+    <th>Description</th>
+    <th colspan="2"></th>
+  </tr>
+ 
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.price %></td>
+      <td><%= product.status %></td>
+      <td><%= product.description %></td>
+      <td><a href="/edit_product/<%=product.id%>">Edit</a></td>
+      <td><a href="/add_to_cart">Add To Cart</a></td>
+    </tr>
+  <% end %>
+</table>
+
+<a href="/new_product">Add New Product</a>
+
+
+<div id="orders"></div>

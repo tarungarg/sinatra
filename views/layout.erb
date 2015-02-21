@@ -1,18 +1,28 @@
 <html>
   <head>
-    <title>E-Comerse</title>
+    <title>Ecomerse</title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
   </head>
   <body>
     <script src="/javascripts/jquery.validate.js"></script>
     <script src="/javascripts/additional-methods.min.js"></script>
 
-    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.min.js"></script>
-    <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/posts/create">New Post</a></li>
-    </ul>
+    <%if @current_user%>
+      Logged In as <%=@current_user.lastname + " " + @current_user.firstname%>
+      <form action="/destroy_user" method="post" id="logout_form">
+        <div style="margin:0;padding:0">
+          <input name="_method" type="hidden" value="delete" />
+          <input type="submit" value="logout">
+        </div>
+      </form>
+    <%end%>
+    <%if flash[:error]%>
+      <p><%=flash[:error]%></p>
+    <%end%>
+    <%if flash[:message]%>
+      <p><%=flash[:message]%></p>
+    <%end%>
+    <p id="product_list_response"><%=params[:message].gsub("'","") if params[:message]%></p>
     <%= yield %>
   </body>
 </html>

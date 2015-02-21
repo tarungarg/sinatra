@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "2.1.1"
+ruby "2.1.2"
 
 gem "mysql"
 
@@ -15,6 +15,7 @@ gem 'jquery-validation-rails'
 
 group :development do
   gem "byebug"
+  gem "tux"
 end
 
 group :production do
