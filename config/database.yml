@@ -4,20 +4,17 @@ development:
   username: root
   password: root
   host: localhost
-  # port: 9999
 
 test:
   adapter: "mysql"
-  database: dbFoo
+  database: dbTest
   username: root
   password: root
   host: localhost
-  # port: 9999
 
 production:
   adapter: "mysql"
-  database: dbFoo
+  database: dbProd
   username: root
   password: root
   host: localhost
-  # port: 9999

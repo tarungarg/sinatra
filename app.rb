@@ -224,6 +224,6 @@ end
 # get order history
 get "/order_history", :auth => :user do
   # include for eggar load
-  @orders = @current_user.orders.includes(:order_lines, {order_lines: :product})
+  @orders = @current_user.orders.order("created_at DESC").includes(:order_lines, {order_lines: :product})
   erb :"/orders/order_history"
 end
