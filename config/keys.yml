@@ -1,0 +1,17 @@
+development:
+  bt_enviorenment: :sandbox
+  bt_merchant_id: '4xpf2p84xtmyxds7'
+  bt_public_key: 'xryf8nx72jz9mvkx'
+  bt_private_key: '47a4d44e7ba331c9043528d537626f90'
+
+test:
+  bt_enviorenment: :sandbox
+  bt_merchant_id: '4xpf2p84xtmyxds7'
+  bt_public_key: 'xryf8nx72jz9mvkx'
+  bt_private_key: '47a4d44e7ba331c9043528d537626f90'
+
+production:
+  bt_enviorenment: :sandbox
+  bt_merchant_id: '4xpf2p84xtmyxds7'
+  bt_public_key: 'xryf8nx72jz9mvkx'
+  bt_private_key: '47a4d44e7ba331c9043528d537626f90'
