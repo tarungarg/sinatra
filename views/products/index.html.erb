@@ -13,13 +13,16 @@
     <tr>
       <td><%= product.name %></td>
       <td><%= product.price %></td>
-      <td><%= product.status %></td>
+      <td><%= product.status ? "Active" : "Deactive"%></td>
       <td><%= product.description %></td>
       <td><a href="/edit_product/<%=product.id%>">Edit</a></td>
-      <td><a href="javascript:void(0);" class="add_to_cart" data-attr=<%=product.id%>>Add To Cart</a></td>
+      <%if product.status%>
+        <td><a href="javascript:void(0);" class="add_to_cart" data-attr=<%=product.id%>>Add To Cart</a></td>
+      <%end%>
     </tr>
   <% end %>
-</table>
+</table><br/><br/>
 
 <a href="/new_product">Add New Product</a> <br/><br/>
-<a href="/order_list">Order List</a>
+<a href="/order_list">Order List</a><br/><br/>
+<a href="/order_history">Order History</a>

@@ -5,6 +5,7 @@ require 'sinatra'
 require 'sinatra/flash'
 require 'sinatra/activerecord'
 require 'json'
+require 'braintree'
 
 enable :sessions
 
@@ -43,8 +44,8 @@ class User < ActiveRecord::Base
   validates_presence_of :lastname
   validates_uniqueness_of :email
 
-  has_many :orders
-  has_many :order_lines
+  has_many :orders, :foreign_key => "customer_id"
+  has_many :order_lines, :foreign_key => "customer_id"
 
   def encrypt_password
     if password.present?
@@ -79,12 +80,18 @@ helpers do
   end
 end
 
+# braintree creds
+Braintree::Configuration.environment = :sandbox
+Braintree::Configuration.merchant_id = '4xpf2p84xtmyxds7'
+Braintree::Configuration.public_key = 'xryf8nx72jz9mvkx'
+Braintree::Configuration.private_key = '47a4d44e7ba331c9043528d537626f90'
+
 # filter to check current user
 before do
   @current_user = User.find_by_id(session[:user_id])
 end
 
-## Root code
+## Routes
 
 # root url for sign in
 get "/" do
@@ -215,8 +222,63 @@ get "/add_to_cart", :auth => :user do
   end
 end
 
+before "/*" do
+  if params[:splat] == ["order_list"] || params[:splat] == ["checkout_order"] || params[:splat] == ["create_transaction"] && @current_user
+    @orderlines = OrderLine.includes(:product).order("updated_at DESC").where(["customer_id = ? && order_id IS NULL", @current_user.id ])
+    @total_price = @orderlines.map(&:total_price).sum unless @orderlines.blank?
+  end
+end
+
 get "/order_list", :auth => :user do
-  @orderlines = OrderLine.includes(:product).order("updated_at DESC").where(["customer_id = ? && order_id IS NULL", @current_user.id ])
-  @total_price = @orderlines.map(&:total_price).sum unless @orderlines.blank?
-  erb :"/products/orders"
+  erb :"/orders/index"
+end
+
+get "/checkout_order", :auth => :user do
+  erb :"/orders/braintree"
+end
+
+# connect with brain tree for payment
+post "/create_transaction" do
+  amount_pay = @total_price.to_f - @total_price.to_f*0.1 if @total_price
+  result = Braintree::Transaction.sale(
+    :amount => amount_pay,
+    :credit_card => {
+      :number => params[:number],
+      :cvv => params[:cvv],
+      :expiration_month => params[:month],
+      :expiration_year => params[:year]
+    },
+    :options => {
+      :submit_for_settlement => true
+    }
+  )
+  if result.success?
+    order = Order.new
+    order.customer_id = @current_user.id
+    order.total = amount_pay
+    order.date = Date.today
+    if Order.count == 0
+      order.order_no = "O01"
+    else
+      ord = Order.last
+      order.order_no = "O0" + (ord.order_no.scan(/\d/).join('').to_i + 1).to_s
+    end
+
+    if order.save
+      @current_user.order_lines.where("order_id is null").each do |ol|
+        ol.order_id = order.id
+        ol.save
+      end
+      halt 200, {message: "Success! Transaction ID: #{result.transaction.id}"}.to_json
+    else
+      halt 400, {error: order.errors.full_messages}.to_json
+    end
+  else
+    halt 400, {errors: "Error: #{result.message}" }.to_json
+  end
+end
+
+get "/order_history", :auth => :user do
+  @orders = @current_user.orders.includes(:order_lines, {order_lines: :product})
+  erb :"/orders/order_history"
 end

@@ -30,6 +30,8 @@ GEM
     arel (6.0.0)
     bcrypt (3.1.10)
     bond (0.5.1)
+    braintree (2.40.0)
+      builder (>= 2.0.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -37,7 +39,10 @@ GEM
       slop (~> 3.6)
     columnize (0.9.0)
     debugger-linecache (1.2.0)
+    diff-lcs (1.2.5)
     erubis (2.7.0)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
     i18n (0.7.0)
     jquery-validation-rails (1.13.1)
       railties (>= 3.2, < 5.0)
@@ -77,6 +82,19 @@ GEM
       rack (>= 1.0)
       rack-test (~> 0.6.2)
       ripl (>= 0.7.0)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.0)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.1)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -106,10 +124,13 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   bcrypt
+  braintree
   byebug
+  factory_girl
   jquery-validation-rails
   json
   mysql
+  rspec
   sinatra
   sinatra-activerecord
   sinatra-flash

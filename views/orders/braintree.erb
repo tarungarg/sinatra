@@ -1,0 +1,37 @@
+<div id="tracation-response"></div>
+<h1>Braintree Credit Card Transaction Form</h1>
+<div>
+  <form action="/create_transaction" method="POST" id="braintree-payment-form">
+  <p>
+      <label>Address To Deliver</label>
+      <input type="text" size="20" autocomplete="off" name="address" />
+    </p>
+    <p>
+      <label>Card Number</label>
+      <input type="text" size="20" autocomplete="off" name="number" data-encrypted-name="number" />
+    </p>
+    <p>
+      <label>CVV</label>
+      <input type="text" size="4" autocomplete="off" name="cvv" data-encrypted-name="cvv" />
+    </p>
+    <p>
+      <label>Expiration (MM/YYYY)</label>
+      <input type="text" size="2" name="month"/> / <input type="text" size="4" name="year" />
+    </p>
+     <p>
+      <label>Amount To Pay</label>
+      <label><b><%=(@total_price.to_f - @total_price.to_f*0.1) if @total_price%></b> (10% off on <%=@total_price.to_f%>)</label>
+    </p>
+    <input type="submit" id="submit" value="Pay"/>
+  </form>
+</div><br/><br/>
+<a href="/order_list">Back To Orders</a>
+<br/><br/><a href="/order_history">Order History</a>
+
+<script src="/javascripts/products.js"></script>
+<script src="/javascripts/validate.js"></script>
+<script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+<script>
+  var braintree = Braintree.create("MIIBCgKCAQEA3rfK9gSTDLeJZuRMpMnk+uVL8W/eJK7oaVvgcnJ4PSJxMxUSVhKHdygYrLevD3/4MtII1avOIqV4bGpnJVXaPFce4nkmJYH7go4wLjnp4DU8P4AqNAs2dZo34BHGn8dqZqxXtIQHnOR07vwaLlJRgHuWw5YLZso5E9tbiakB1/mAHTmZLtI9w0TUpf7hJLwddxUh88u5sqhKdalOiL0nfnuzamlCgIEBgWPDHStdyNt/5WHWG6Ufe3cgslqOd8RQZRNhLhZKsq09I+hbHyV3T8YRii04R05f4pZj8d+3SXZTWQtWw/7ssPk1ws5N6URpKyewbAmHXozbQGhJyFfTcwIDAQAB");
+  braintree.onSubmitEncryptForm('braintree-payment-form');
+</script>

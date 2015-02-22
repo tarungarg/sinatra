@@ -63,4 +63,25 @@ $("document").ready(function(){
     });
   });
 
+  $('form#braintree-payment-form').submit(function(e) {
+    e.preventDefault();
+    var valuesToSubmit = $(this).serialize();
+    var isvalidate=$("#braintree-payment-form").valid(); // check if form is valid
+    if (isvalidate) {
+      $.ajax({
+        type: "POST",
+        url: $(this).attr('action'),
+        data: valuesToSubmit,
+        dataType: "JSON"
+      }).done(function(data){
+        $("#tracation-response").html("<h1><b>"+data.message+"</b></h1>")
+        setTimeout(function () {
+          window.location.href = "/order_history"
+        }, 5000);
+      }).fail(function(error){
+        $("#tracation-response").html(error.responseJSON.errors)
+      });
+    }
+  });  
+
 });

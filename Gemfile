@@ -13,9 +13,15 @@ gem "json"
 #client side validations
 gem 'jquery-validation-rails'
 
+gem "braintree"
+
 group :development do
   gem "byebug"
   gem "tux"
+end
+group :test do
+  gem "rspec"
+  gem 'factory_girl'
 end
 
 group :production do

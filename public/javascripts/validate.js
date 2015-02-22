@@ -6,8 +6,26 @@ var requiredRule = {
 
 var requiredLengthRule = {
   required: true,
-  minlength: 6,
-  maxlength: 10
+  minlength: 7,
+  maxlength: 20
+};
+
+var requiredFixLengthRule = {
+  required: true,
+  minlength: 15,
+  maxlength: 16
+};
+
+var requiredCvvRule = {
+  required: true,
+  minlength: 3,
+  maxlength: 3
+};
+
+var requiredMonthRule = {
+  required: true,
+  min: 1,
+  max: 12
 };
 
 var requiredStringRule = {
@@ -147,6 +165,33 @@ $('#update_product_form').validate({
     error.css('position', 'absolute');
     error.css('left', offset.left + element.outerWidth());
     error.css('top', offset.top);
+    error.css('color','red');
+    var elem = $(element);
+    elem.addClass('error-input');  
+  },
+  unhighlight: function (element, errorClass, validClass) {
+    var elem = $(element);
+    elem.removeClass('error-input');
+  }
+});
+
+$('#braintree-payment-form').validate({
+  rules: { 
+   "number": requiredFixLengthRule,
+   "cvv": requiredCvvRule,
+   "month": requiredMonthRule,
+   "year": requiredNumberRule,
+   "address": requiredTextRule
+  },
+  errorElement: "div",
+  wrapper: "div", 
+  highlight: function (element, errorClass, validClass) {
+    var elem = $(element);
+    elem.addClass('error-input');
+  },
+  errorPlacement: function(error,element) {
+    offset = element.offset();
+    error.insertBefore(element)
     error.css('color','red');
     var elem = $(element);
     elem.addClass('error-input');  
