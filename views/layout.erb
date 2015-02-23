@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Ecomerce</title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  </head>
+  <body>
+    <script src="/javascripts/jquery.validate.js"></script>
+    <script src="/javascripts/additional-methods.min.js"></script>
+
+    <%if @current_user%>
+      Logged In as <%=@current_user.lastname + " " + @current_user.firstname%>
+      <form action="/destroy_user" method="post" id="logout_form">
+        <div style="margin:0;padding:0">
+          <input name="_method" type="hidden" value="delete" />
+          <input type="submit" value="Log out">
+        </div>
+      </form>
+    <%end%>
+    <%if flash[:error]%>
+      <p><%=flash[:error]%></p>
+    <%end%>
+    <%if flash[:message]%>
+      <p><%=flash[:message]%></p>
+    <%end%>
+    <%= yield %>
+  </body>
+</html>

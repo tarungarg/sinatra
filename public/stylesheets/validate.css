@@ -1,0 +1,4 @@
+label.error {font-size:11px  !important; color:red !important; font-style:italic}
+.error-input {border: 1px solid red !important}
+
+.errorextra {display: block; padding-left: 150px;}

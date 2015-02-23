@@ -1,0 +1,24 @@
+<h1>New Product</h1>
+
+<form action="/update_product/<%=@product.id%>" method="POST" id="update_product_form">
+ <input type="hidden" name="_method" value="put" />
+  <label for="product_name">Name: </label>
+  <input type="text" name="product[name]" id="product_name" value="<%=@product.name%>">
+  <br/>
+  <label for="product_price">Price: </label>
+  <input type="text" name="product[price]" id="product_price" value="<%=@product.price%>"><br/>
+  (Please enter decimal value eg. 12.34)
+  <br/><br/>
+  <input type="checkbox" name="product[status]" id="product_status" <%=@product.status ? "checked" : ""%>>Status
+  <br/><br/>
+  <label for="product_description">Description: </label>
+  <textarea rows="4" cols="50" name="product[description]" id="product_description"><%=@product.description%></textarea><br/>
+  (min=1 max=255)
+  <br/>
+  <br/><br/>
+  <input type="submit" name="Update Product" value="Update Product">
+</form>
+<br/>
+
+<script src="/javascripts/products.js"></script>
+<script src="/javascripts/validate.js"></script>

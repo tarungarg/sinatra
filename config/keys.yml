@@ -1,0 +1,17 @@
+development:
+  bt_enviorenment: "xxxxxxxxxxxxxxxxxx"
+  bt_merchant_id: "xxxxxxxxxxxxxxxxxx"
+  bt_public_key:  "xxxxxxxxxxxxxxxxxx"
+  bt_private_key: "xxxxxxxxxxxxxxxxxx"
+
+test:
+  bt_enviorenment: "xxxxxxxxxxxxxxxxxx"
+  bt_merchant_id: "xxxxxxxxxxxxxxxxxx"
+  bt_public_key:  "xxxxxxxxxxxxxxxxxx"
+  bt_private_key: "xxxxxxxxxxxxxxxxxx"
+
+production:
+  bt_enviorenment: "xxxxxxxxxxxxxxxxxx"
+  bt_merchant_id: "xxxxxxxxxxxxxxxxxx"
+  bt_public_key:  "xxxxxxxxxxxxxxxxxx"
+  bt_private_key: "xxxxxxxxxxxxxxxxxx"

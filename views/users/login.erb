@@ -1,0 +1,14 @@
+<div id="server-signin-errors"></div>
+<h1>Sign In</h1>
+
+<form action="/create_sign_in" method="POST" id="signin_form">
+  Email: <input type="text" name="user[email]">
+  <br/>
+  Password: <input type="password" name="user[password]">
+  <br/><br/><br/>
+  <input type="submit" name="Sign In" value="Sign In" id="signIn_button">
+</form>
+<a href="/signup">Sign Up</a>
+
+<script src="/javascripts/registration_form.js"></script>
+<script src="/javascripts/validate.js"></script>
