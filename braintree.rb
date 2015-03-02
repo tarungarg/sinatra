@@ -3,9 +3,9 @@ require 'rubygems'
 require 'braintree'
 
 Braintree::Configuration.environment = :sandbox
-Braintree::Configuration.merchant_id = '4xpf2p84xtmyxds7'
-Braintree::Configuration.public_key = 'xryf8nx72jz9mvkx'
-Braintree::Configuration.private_key = '47a4d44e7ba331c9043528d537626f90'
+Braintree::Configuration.merchant_id = "xxxxxxxxxxxxx"
+Braintree::Configuration.public_key =  "xxxxxxxxxxxxx"
+Braintree::Configuration.private_key = "xxxxxxxxxxxxx"
 
 result = Braintree::Transaction.sale(
     :amount => "1000.00",
